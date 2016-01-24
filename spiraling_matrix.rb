@@ -29,9 +29,7 @@ end
 
 def create_row_if_needed
   if @matrix.empty?
-    # @prime_row can always be identified by .object_id
     @matrix << []
-    @prime_row = @matrix.first
   elsif @matrix.size == 1 && @matrix.first.size == 2
     @matrix.push([])
   elsif @current_direction == "up" && all_row_sizes_are_equal?
@@ -61,7 +59,7 @@ end
 end
 
 
-3.times{|n| puts nil}
+puts nil
 
 results = @matrix.map do |row|
   row.collect do |n|
@@ -70,4 +68,4 @@ results = @matrix.map do |row|
   end
 end
 
-results.each{|row| p row.join(' ')}
+results.each{|row| puts row.join(' ')}
