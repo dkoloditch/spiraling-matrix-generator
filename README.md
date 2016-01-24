@@ -2,6 +2,9 @@
 
 Just a little project for fun.
 
+In a nutshell, this program is based on direction. As long as the population
+direction is accurate, the values will be populated accordingly.
+
 As an example, numbers 0 through 80 should produce an output like this:
 ```
 72 73 74 75 76 77 78 79 80
