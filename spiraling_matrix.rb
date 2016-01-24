@@ -1,13 +1,12 @@
 @matrix = []
 puts "Enter a number: "
-number = gets.chomp.to_i
+user_provided_number = gets.chomp.to_i
 
 def base_row_finished?
   @matrix.size == 1 && @matrix.first.size == 2
 end
 
 def set_current_direction
-  # p "all_row_sizes_are_equal: #{all_row_sizes_are_equal?}; #{@matrix.collect{|row| row.size}}"
   if @matrix.empty? || (@matrix.size < 2 && @matrix.first.size < 2)
     # initial row
     @current_direction = "right"
@@ -42,15 +41,9 @@ def create_row_if_needed
   end
 end
 
-(number + 1).times do |n|
+(user_provided_number + 1).times do |n|
   set_current_direction
   create_row_if_needed
-  p ""
-  p ""
-  p @current_direction
-  p @matrix
-  p ""
-  p ""
 
   if @current_direction == "right"
     @matrix.first.push(n)
@@ -68,9 +61,13 @@ end
 end
 
 
-p "*" * 20
-p "*" * 20
-p "*" * 20
-p "*" * 20
-p "*" * 20
-@matrix.each{|row| p row.join('  ')}
+3.times{|n| puts nil}
+
+results = @matrix.map do |row|
+  row.collect do |n|
+    spaces = " " * ((user_provided_number.to_s.size - n.to_s.size))
+    n.to_s + spaces
+  end
+end
+
+results.each{|row| p row.join(' ')}
