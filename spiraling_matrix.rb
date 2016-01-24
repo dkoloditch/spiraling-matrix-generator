@@ -1,8 +1,11 @@
-def generate_matrix
+def get_number_from_user
   puts "Enter a number: "
   @user_provided_number = gets.chomp.to_i
+end
 
+def generate_matrix
   @matrix = []
+  get_number_from_user
 
   (0..@user_provided_number).each do |num|
     set_current_direction
