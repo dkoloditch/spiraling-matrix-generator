@@ -1,25 +1,36 @@
-def run
-  @matrix = []
+def generate_matrix
   puts "Enter a number: "
   @user_provided_number = gets.chomp.to_i
 
-  (@user_provided_number + 1).times do |n|
+  @matrix = []
+
+  (0..@user_provided_number).each do |num|
     set_current_direction
     create_row_if_needed
+    add_value_to_matrix(num)
+  end
+end
 
-    if @current_direction == "right"
-      @matrix.first.push(n)
-    elsif @current_direction == "left"
-      @matrix.last.unshift(n)
-    elsif @current_direction == "up"
-      # add the number to array after the one that contains the previous number
-      previous_row_idx = @matrix.reverse.map.with_index{|row, idx| idx if row.include?(n-1)}.compact.first
-      @matrix.reverse[previous_row_idx + 1].unshift(n)
-    elsif @current_direction == "down"
-      # add the number to array after the one that contains the previous number
-      previous_row_idx = @matrix.map.with_index{|row, idx| idx if row.include?(n-1)}.compact.first
-      @matrix[previous_row_idx + 1].push(n)
+def add_value_to_matrix(num)
+  case @current_direction
+  when "right"
+    @matrix.first.push(num)
+  when "left"
+    @matrix.last.unshift(num)
+  when "up"
+    # add number to array after the array that contains the previous number
+    previous_row_idx = @matrix.reverse.map.with_index do |row, idx|
+      idx if row.include?(num-1)
     end
+    target_row_index = previous_row_idx.compact.first + 1
+    @matrix.reverse[target_row_index].unshift(num)
+  when "down"
+    # add number to array after the array that contains the previous number
+    previous_row_idx = @matrix.map.with_index do |row, idx|
+      idx if row.include?(num-1)
+    end
+    target_row_index = previous_row_idx.compact.first + 1
+    @matrix[target_row_index].push(num)
   end
 end
 
@@ -27,7 +38,7 @@ def set_current_direction
   if @matrix.empty? || (@matrix.size < 2 && @matrix.first.size < 2)
     # initial row
     @current_direction = "right"
-  elsif base_row_finished?
+  elsif initial_row_full?
     @current_direction = "left"
   elsif @current_direction == "right" && (@matrix[0].size > @matrix[1].size)
     @current_direction = "down"
@@ -45,18 +56,18 @@ def create_row_if_needed
     @matrix << []
   elsif @matrix.size == 1 && @matrix.first.size == 2
     @matrix.push([])
-  elsif @current_direction == "up" && all_row_sizes_are_equal?
+  elsif @current_direction == "up" && all_rows_are_the_same_size?
     @matrix.unshift([])
-  elsif @current_direction == "down" && all_row_sizes_are_equal?
+  elsif @current_direction == "down" && all_rows_are_the_same_size?
     @matrix.push([])
   end
 end
 
-def base_row_finished?
+def initial_row_full?
   @matrix.size == 1 && @matrix.first.size == 2
 end
 
-def all_row_sizes_are_equal?
+def all_rows_are_the_same_size?
   @matrix.collect{|row| row.size}.uniq.size <= 1
 end
 
@@ -73,5 +84,5 @@ def output_results
 end
 
 
-run
+generate_matrix
 output_results
