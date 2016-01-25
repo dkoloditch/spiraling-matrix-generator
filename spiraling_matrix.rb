@@ -76,12 +76,21 @@ def all_rows_are_the_same_size?
   @matrix.collect{|row| row.size}.uniq.size <= 1
 end
 
-def output_results
-  # pad the last row if necessary
+def add_padding_if_necessary
+  # bottom side
   if @matrix.last.size != @matrix[-2].size
     difference = @matrix[-2].size - @matrix.last.size
     difference.times{|count| @matrix.last.unshift(nil)}
   end
+
+  # left side
+  if @matrix.last.size > @matrix[1].size
+    @matrix.each{|row| row.unshift(nil) if row.size < @matrix.last.size}
+  end
+end
+
+def output_results
+  add_padding_if_necessary
 
   results = @matrix.map do |row|
     row.collect do |n|
