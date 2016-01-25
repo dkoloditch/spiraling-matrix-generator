@@ -1,11 +1,11 @@
 def get_number_from_user
-  puts "Enter a positive number: "
+  puts "Enter a positive number, 1000 or less:"
   @user_provided_number = gets.chomp.to_i
 end
 
 def generate_matrix
   @matrix = []
-  while @user_provided_number.nil? || @user_provided_number < 0
+  while @user_provided_number.nil? || @user_provided_number < 0 || @user_provided_number > 1000
     get_number_from_user
   end
 
