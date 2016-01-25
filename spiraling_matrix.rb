@@ -1,11 +1,13 @@
 def get_number_from_user
-  puts "Enter a number: "
+  puts "Enter a positive number: "
   @user_provided_number = gets.chomp.to_i
 end
 
 def generate_matrix
   @matrix = []
-  get_number_from_user
+  while @user_provided_number.nil? || @user_provided_number < 0
+    get_number_from_user
+  end
 
   (0..@user_provided_number).each do |num|
     set_current_direction
@@ -75,6 +77,12 @@ def all_rows_are_the_same_size?
 end
 
 def output_results
+  # pad the last row if necessary
+  if @matrix.last.size != @matrix[-2].size
+    difference = @matrix[-2].size - @matrix.last.size
+    difference.times{|count| @matrix.last.unshift(nil)}
+  end
+
   results = @matrix.map do |row|
     row.collect do |n|
       spaces = " " * ((@user_provided_number.to_s.size - n.to_s.size))
