@@ -1,4 +1,4 @@
-# spiraling-matrix-generator
+# Spiraling Matrix Generator
 
 Just a little project for fun.
 
