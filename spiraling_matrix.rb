@@ -104,5 +104,4 @@ def output_results
 end
 
 
-generate_matrix
-output_results
+generate_matrix and output_results
